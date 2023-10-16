@@ -2,8 +2,6 @@
 #define MAIN_H
 #include <stdarg.h>
 #include <stdlib>
-
-int _printf(const char *format, ...);
 /**
  * struct flags - struct containing flags to "turn on"
  * when a flag specifier is passed to _printf()
