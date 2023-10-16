@@ -3,16 +3,9 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <unistd.h>
-
-
-
-/**
- * struct format - match the conversion specifiers for printf
- * @id: type char pointer of the specifier i.e (l, h) for (d, i, u, o, x, X)
- * @f: type pointer to function for the conversion specifier
- *
- */
-
+#include <string.h>
+#include <limits.h>
+\
 typedef struct format
 {
 	char *id;
