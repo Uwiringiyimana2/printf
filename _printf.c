@@ -1,6 +1,5 @@
 #include "main.h"
-#include <limit.h>
-#include <stio.h>
+#include <stdio.h>
 /**
  * _printf - function that produces output according to a format
  * @format: format sting contain character and specifiers string
