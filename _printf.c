@@ -2,58 +2,46 @@
 
 /**
  * _printf - function that produces output according to a format
- * @format - character string
+ * @format: format sting contain character and specifiers string
  *
- * Return: number of character printed
+ * Return: length of the fromatted output string
  */
 
 int _printf(const char *format, ...)
 {
-	va_list f_list;
-	int char_count = 0;
+	int (*pfunc)(va_list, flags_t *);
+	const char *p;
+	va_list arguments;
+	flags_t flags = {0, 0, 0};
 
-	if (format == NULL)
+	register int count = 0;
+
+	va_start(arguments, format);
+	if (!format || (format[0] == '%' && !format[1]))
 		return (-1);
-
-	va_start(f_list, format);
-
-	while (*format)
+	if (format[0] == '%' && format[1] == ' ' && !format[2])
+		return (-1);
+	for (p = format; *p; p++)
 	{
-		if (*format != '%')
+		if (*p == '%')
 		{
-			write(1, format, 1);
-			char_count++;
-		}
-		else
-		{
-			format++;
-			if (*format == '\0')	
-				break;
-
-			if (*format == '%')
+			p++;
+			if (*p == '%')
 			{
-				write(1, format, 1);
-				char_count++;
+				count += _putchar('%');
+				continue;
 			}
-			else if (*format == 'c')
-			{
-				char c  = va_arg(f_list, int)
-				write(1, &c, 1);
-				char_count++;
-			}
-			else if (*format == 's')
-			{
-				char *str = va_arg(f_list, char*);
-				int str-len = 0;
-
-				while (str[str_len] != '\0')
-					str_len++;
-				write(1, str, str_len);
-				char_count += str_len;
-			}
-		}
-		format++;
+			while (get_flag(*p, &flags))
+				p++;
+			pfunc = get_print(*p);
+			count += (pfunc)
+				? pfunc(arguments, &flags)
+				: _printf("%%%c", *p);
+		} else
+			count += _putchar(*p);
 	}
-	va_end(f_list);
-	return char_count;
+	_putchar(-1);
+	va_end(arguments);
+	return (count);
+
 }
